@@ -20,7 +20,7 @@
 include_recipe "collectd"
 
 remote_file File.join(node[:collectd][:plugin_dir], "carbon_writer.py") do
-  source "https://github.com/jkerzner/collectd-carbon/blob/master/carbon_writer.py"
+  source "https://raw.github.com/jkerzner/collectd-carbon/master/carbon_writer.py"
   mode "0644"
 end
 
