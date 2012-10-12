@@ -20,31 +20,10 @@
 include_recipe "collectd"
 
 remote_file File.join(node[:collectd][:plugin_dir], "carbon_writer.py") do
-  source "https://raw.github.com/jkerzner/collectd-carbon/master/carbon_writer.py"
+  source node[:collectd_plugins][:carbon_writer_url]
   mode "0644"
 end
 
-#cookbook_file File.join(node[:collectd][:plugin_dir], "redis.py") do
-#  owner "root"
-#  group "root"
-#  mode "644"
-#end
-
-
 collectd_python_plugin "carbon_writer" do
-  options :line_receiver_host => "walrus.pop.umn.edu", :line_receiver_port => "2003", :types_d_b => node[:collectd][:types_db][0]
+  options :line_receiver_host => "walrus.pop.umn.edu", :line_receiver_port => "2003", :types_d_b => node[:collectd][:types_db]
 end
-    
-
-#servers = []
-#if node[:recipes].include? "redis::server"
-#  servers << "localhost"
-#else
-#  search(:node, 'recipes:"redis::server"') do |server|
-#    servers << server["fqdn"]
-#  end
-#end
-#
-#collectd_python_plugin "redis" do
-#  options :host=>servers, :verbose=>true
-#end
